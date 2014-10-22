@@ -1,55 +1,29 @@
 package com.keller23.java.robotschedulerio;
 
 import com.keller23.java.robotschedulerio.lib.Refs;
-import com.keller23.java.robotschedulerio.utils.Debug;
 import com.keller23.java.robotschedulerio.utils.IO;
+import com.keller23.java.robotschedulerio.utils.log.Log;
+import com.keller23.java.robotschedulerio.window.Console;
 import org.json.simple.JSONObject;
 
-import java.applet.Applet;
 
-public class Main extends Applet{
+public class Main {
 
     public static void main(String[] args){
-        initOptions();
+        init();
         JSONObject obj = new JSONObject();
         if (args.length > 0) {
-            System.out.println();
-            if (args[0].equals(Refs.OPTIONABOUTCMD)) {
-                System.out.println("\n" + Refs.ABOUTVERSION + "\n");
-            }
-            else if (args[0].equals(Refs.OPTIONTESTCMD)) {
-                Debug.d("Arguments = OPTIONTESTCMD");
-                if (test()) Debug.output("Woohoo! Good job, test().");
-                else Debug.output("Bad test(), bad!");
-            }
-            else if (args[0].equals(Refs.OPTIONREADCMD)) {
-                Debug.d("Arguments = OPTIONREADCMD");
-                IORead(args[1],args[2]);
-            }
-            else if (args[0].equals(Refs.OPTIONWRITECMD)) {
-                Debug.d("Arguments = OPTIONWRITECMD");
-                IORead(args[1],args[2]);
-            }
-            else if (args[0].equals(Refs.OPTIONOPTIONSCMD)) {
-                Refs.showOptions();
-            }
-            else {
-                Refs.showOptions();
-            }
+            checkArgs(args);
         }
-        if (Refs.DEBUG) Debug.calledWith(args);
+        if (Refs.DEBUG) Refs.calledWith(args);
     }
 
-    public static boolean IOWrite(String _dir, String _file, JSONObject _json) {
-        return IO.write(_dir, _file, _json);
-    }
+    private static void init() {
+        Console.init();
+        Log.init();
 
-    public static boolean IORead(String _dir, String _file) {
-        return IO.read(_dir, _file);
-    }
-
-    public static boolean test() {
-        return true;
+        initOptions();
+        Log.info(Refs.APPNAME + ": " + Refs.VERSION);
     }
 
     private static void initOptions() {
@@ -58,6 +32,63 @@ public class Main extends Applet{
         Refs.OPTIONS.put(Refs.OPTIONWRITE,Refs.OPTIONWRITECMD);
         Refs.OPTIONS.put(Refs.OPTIONTEST,Refs.OPTIONTESTCMD);
         Refs.OPTIONS.put(Refs.OPTIONOPTIONS,Refs.OPTIONABOUTCMD);
+        Refs.OPTIONS.put(Refs.OPTIONCONSOLE,Refs.OPTIONCONSOLECMD);
+        Log.initialize("Refs.OPTIONS initialized.");
+    }
+
+    private static void checkArgs(String[] _args) {
+        System.out.println();
+        /*int numArgs = _args.length;*/
+
+        /*for (int i = 0; i < numArgs; i++) {*/ // TODO fix this to support multiple command line arguments, such as appending DEBUG/console modes
+        if (_args[0].equals(Refs.OPTIONABOUTCMD)) {
+            Log.argument("ABOUT");
+            System.out.println("\n" + Refs.ABOUTVERSION + "\n");
+        }
+        else if (_args[0].equals(Refs.OPTIONTESTCMD)) {
+            Log.argument("TEST");
+            if (test()) Log.test("Woohoo! Good job, test().");
+            else Log.severe("test() is false.");
+            /*if (test()) com.keller23.java.robotschedulerio.utils.Log.console("Woohoo! Good job, test().");
+            else com.keller23.java.robotschedulerio.utils.Log.console("Bad test(), bad!");*/
+        }
+        else if (_args[0].equals(Refs.OPTIONREADCMD)) {
+            Log.argument("WRITE - (DIR) " + _args[1] + " - (FILE) " + _args[2]);
+            IORead(_args[1], _args[2]);
+        }
+        else if (_args[0].equals(Refs.OPTIONWRITECMD)) {
+            Log.argument("WRITE - (DIR) " + _args[1] + " - (FILE) " + _args[2]);
+            IORead(_args[1], _args[2]);
+        }
+        else if (_args[0].equals(Refs.OPTIONOPTIONSCMD)) {
+            Log.argument("OPTIONS");
+            Refs.showOptions();
+        }
+        else if (_args[0].equals(Refs.OPTIONCONSOLECMD)) {
+            // enable console window
+            /*if (Refs.DEBUG) Console.getFrame().setVisible(true);
+            else Log.console("Debugging not enabled.");*/
+        }
+        else {
+            Refs.showOptions();
+                /*break;*/
+        }
+        /*}*/
+    }
+
+    public static boolean IOWrite(String _dir, String _file, JSONObject _json) {
+        Log.ioDebug("IOWrite has been called with (DIR):" + _dir + " / (FILE):" + _file + " & (JSON):" + _json, Refs.DEBUG);
+        return IO.write(_dir, _file, _json);
+    }
+
+    public static boolean IORead(String _dir, String _file) {
+        Log.ioDebug("IORead has been called with (DIR):" + _dir + " / (FILE):" + _file, Refs.DEBUG);
+        return IO.read(_dir, _file);
+    }
+
+    public static boolean test() {
+        Log.test("test() has been called.");
+        return false;
     }
 }
 

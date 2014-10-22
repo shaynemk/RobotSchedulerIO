@@ -1,12 +1,8 @@
 package com.keller23.java.robotschedulerio.utils;
 
-import com.keller23.java.robotschedulerio.config.Config;
-import com.keller23.java.robotschedulerio.lib.Refs;
-import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 
 public class IO {
 
@@ -15,14 +11,14 @@ public class IO {
         File file = new File(_file);
 
         if(!dir.exists()) {
-            Debug.output("Directory does not exist.");
+            Log.console("Directory does not exist.");
             return false;
         }
         if(!file.exists()) {
-            Debug.output("File does not exist.");
+            Log.console("File does not exist.");
             return false;
         }
-        Debug.d("Yay, file and directory exists!");
+        Log.d("Yay, file and directory exists!");
         return true;
     }
 
@@ -38,19 +34,19 @@ public class IO {
                 IOUtils.createUserDir(Refs.AUTHOR);
             } catch (IOException e) {
                 e.printStackTrace();
-                LogHelper.warning("Unable to create root directory");
+                Log.warning("Unable to create root directory");
             }
-            LogHelper.debug("Root directory created");
+            Log.DEBUG("Root directory created");
         } else {
-            LogHelper.debug("Root directory exists");
+            Log.DEBUG("Root directory exists");
         }
         if (file.exists()) {
             load();
         } else if (!file.exists()) {
-            LogHelper
+            Log
                     .warning("Config not found: creating default config (This is normal on a first start)");
             createDefaults();
         }
-        LogHelper.debug("Config handler initilized");
+        Log.DEBUG("Config handler initilized");
     }*/
 }
