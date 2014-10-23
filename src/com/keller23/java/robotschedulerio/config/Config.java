@@ -14,3 +14,5 @@ public class Config {
 
     public static final String[] CONFIG_OPTS = {"S_cfg_path_file", "S_cfg_path_filename", "b_dbg"};
 }
+public static final File USER_ROOT = new File(
+        System.getProperty("user.home") + "\\AppData\\Roaming");
