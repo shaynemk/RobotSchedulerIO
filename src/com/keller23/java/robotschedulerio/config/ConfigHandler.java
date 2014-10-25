@@ -79,6 +79,7 @@ public class ConfigHandler {
             Log.console(e.getMessage());
         }
     }
+
     private static void createConfigFile() {
         // creating config file
         Log.console("Creating Config File.");
