@@ -19,8 +19,8 @@ public class Main {
     }
 
     private static void init() {
-        Console.init();
-        Log.init();
+        /*Console.init();
+        Log.init();*/
 
         initOptions();
         Log.info(Refs.APPNAME + ": " + Refs.VERSION);
@@ -87,8 +87,8 @@ public class Main {
     }
 
     public static boolean test() {
-        Log.test("test() has been called.");
-        return false;
+        /*Log.test("test() has been called.");*/
+        return true;
     }
 }
 

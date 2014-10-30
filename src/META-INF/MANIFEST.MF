@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
-Class-Path: commons-io-2.4.jar json-simple-1.1.1.jar
-Main-Class: com.keller23.java.robotschedulerio.Main
 Application-Name: RobotSchedulerIO
+Class-Path: commons-io-2.4.jar json-simple-1.1.1.jar
 Permissions: sandbox
-Codebase: *
 Caller-Allowable-Codebase: *
+Main-Class: com.keller23.java.robotschedulerio.JSMain
+Codebase: *
+

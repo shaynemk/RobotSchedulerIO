@@ -1,0 +1,51 @@
+<!doctype HTML>
+<meta http-equiv="x-ua-compatible" content="IE=9">
+<html>
+<head>
+<title>IO Test</title>
+<script src="deployJava.js"></script>
+</head>
+<body>
+
+<!-- stackoverflow.com/questions/16920984/what-is-the-best-way-of-java-and-javascript-interaction -->
+
+<script>
+////////////////// ORACLE CODE //////////////////
+    var attributes = {id: 'IO_Handler',
+					  code: 'JSMain',
+                      archive: 'RobotSchedulerIO.jar',
+                      width: '0',
+                      height: '0'};
+    var parameters = {java_arguments: 'JSTest'}; // customize per your needs
+    var version = '1.6'; // JDK version
+    deployJava.runApplet(attributes, parameters, version);
+
+ //////////////// END ORACLE CODE ////////////////
+
+
+ function testApp() {
+  console.log("Entered testApp()");
+
+  console.log("Running IO_Handler.main()");
+  //var testResult = IO_Handler.test();
+  IO_Handler.main();
+
+  console.log("Running IOTest.main('JSTest')");
+  document.IOTest.main("JSTest");
+
+  console.log("Running IOTest.JSTest()");
+  var testResult = document.IOTest.JSTest();
+
+  console.log("testResult = " + testResult);
+
+  if (testResult) alert("test returned true! :)");
+  else alert("test returned false. :(");
+ }
+</script>
+
+<applet code="JSMain" name="IOTest" archive="RobotSchedulerIO.jar"  width="0" height="0"></applet>
+
+<input type="button" value="Test" onclick="testApp();">
+
+</body>
+</html>
